@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:states_app/models/user.dart';
+import 'package:states_app/services/user_services.dart';
 
 class Pag1Page extends StatelessWidget {
+  const Pag1Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +17,13 @@ class Pag1Page extends StatelessWidget {
         elevation: 5,
         centerTitle: true,
       ),
-      body: UserInfo(),
+      body: StreamBuilder<User>(
+          stream: userService.userStream,
+          builder: (context, AsyncSnapshot<User> snapshot) {
+            return snapshot.hasData
+                ? UserInfo(user: snapshot.data!)
+                : const Center(child: Text('No hay información del user'));
+          }),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.next_plan),
         onPressed: () => Navigator.pushNamed(context, 'page2'),
@@ -25,7 +35,10 @@ class Pag1Page extends StatelessWidget {
 class UserInfo extends StatelessWidget {
   const UserInfo({
     super.key,
+    required this.user,
   });
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -33,29 +46,27 @@ class UserInfo extends StatelessWidget {
         height: double.infinity,
         width: double.infinity,
         padding: const EdgeInsets.all(20.0),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'General',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Divider(),
-            ListTile(title: Text('Nombre: ')),
-            ListTile(title: Text('Edad: ')),
-            Text(
-              'Profesiones',
+            const Divider(),
+            ListTile(title: Text('Nombre: ${user.nombre}')),
+            ListTile(title: Text('Edad: ${user.edad}')),
+            const Text(
+              'Profesiones:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            ListTile(title: Text('Profesion 1')),
-            ListTile(title: Text('Profesion 2')),
-            ListTile(title: Text('Profesion 3')),
+            for (String prof in user.profesions) ListTile(title: Text(prof)),
           ],
         ));
   }

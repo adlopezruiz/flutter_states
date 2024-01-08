@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Pag1Page extends StatelessWidget {
+  const Pag1Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +15,7 @@ class Pag1Page extends StatelessWidget {
         elevation: 5,
         centerTitle: true,
       ),
-      body: UserInfo(),
+      body: const UserInfo(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.next_plan),
         onPressed: () => Navigator.pushNamed(context, 'page2'),

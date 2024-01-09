@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:states_app/bloc/cubit/user_cubit.dart';
+import 'package:states_app/models/user.dart';
 
 class Page2Page extends StatelessWidget {
   const Page2Page({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -21,7 +25,13 @@ class Page2Page extends StatelessWidget {
           children: [
             MaterialButton(
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                final user = User(nombre: 'Adri', edad: 25, profesions: [
+                  'Praticante',
+                  'Pro player',
+                ]);
+                userCubit.selectUser(user);
+              },
               child: const Text(
                 'Establecer Usuario',
                 style: TextStyle(color: Colors.white),
@@ -29,7 +39,9 @@ class Page2Page extends StatelessWidget {
             ),
             MaterialButton(
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                userCubit.changeAge(35);
+              },
               child: const Text(
                 'Cambiar edad',
                 style: TextStyle(color: Colors.white),
@@ -37,7 +49,7 @@ class Page2Page extends StatelessWidget {
             ),
             MaterialButton(
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () => userCubit.addProfession(),
               child: const Text(
                 'Añadir profesión',
                 style: TextStyle(color: Colors.white),

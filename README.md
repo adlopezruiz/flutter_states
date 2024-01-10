@@ -1,6 +1,10 @@
 # states_app
 
+CHECK THE DIFFERENTE BRANCHES FOR EACH STATE MANAGEMENT BASICS
+
 A new Flutter project.
+
+
 
 ## Getting Started
 
